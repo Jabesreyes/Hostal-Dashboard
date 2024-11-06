@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use DateTime;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Date;
 
 class Reserva extends Model
 {
@@ -39,15 +41,18 @@ class Reserva extends Model
     public static function reservasDelMes()
     {
         $fechaActual = new DateTime();
+        $fechaHoy = Carbon::today('America/El_Salvador')->toDateString();
         $fechaIngreso = $fechaActual->modify('first day of this month')->format('Y-m-d');
         $fechaRetiro = $fechaActual->modify('last day of this month')->format('Y-m-d');
-        return Reserva::with(['clientes', 'estado_reservas'])->where(function ($query) use ($fechaIngreso, $fechaRetiro) {
-            $query->whereBetween('fecha_ingreso', [$fechaIngreso, $fechaRetiro])
-                ->orWhereBetween('fecha_retiro', [$fechaIngreso, $fechaRetiro])
-                ->orWhere(function ($query) use ($fechaIngreso, $fechaRetiro) {
-                    $query->where('fecha_ingreso', '<=', $fechaIngreso)
-                        ->where('fecha_retiro', '>=', $fechaRetiro);
-                });
-        })->get();
+        return Reserva::with(['clientes', 'estado_reservas'])
+            ->where('estado_reservas_id', '!=', 1)
+            ->where(function ($query) use ($fechaIngreso, $fechaRetiro) {
+                $query->whereBetween('fecha_ingreso', [$fechaIngreso, $fechaRetiro])
+                    ->orWhereBetween('fecha_retiro', [$fechaIngreso, $fechaRetiro])
+                    ->orWhere(function ($query) use ($fechaIngreso, $fechaRetiro) {
+                        $query->where('fecha_ingreso', '<=', $fechaIngreso)
+                            ->where('fecha_retiro', '>=', $fechaRetiro);
+                    });
+            })->whereDate('fecha_ingreso', $fechaHoy)->get();
     }
 }

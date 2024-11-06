@@ -9,7 +9,7 @@ class EstadoReservaController
 {
     public function index()
     {
-        $data['estados'] = Estado_reserva::all();
+        $data['estados'] = Estado_reserva::paginate(5);
         return view('estadoreserva.index', $data);
     }
     /**

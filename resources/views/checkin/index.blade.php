@@ -34,7 +34,9 @@
         </div>
     </div>
 </div>
-<br /><br />
+<br />
+<h5 id="fechanow"></h5>
+<br />
 <div class="card-deck">
     @foreach($reservas as $reserva)
     <div class=" card info-box bg-primary">
@@ -66,6 +68,16 @@
         modal.setAttribute('data-toggle', "modal");
 
     }
+    const fechaActual = new Date();
+    const opciones = {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    };
+    const fechaFormateada = fechaActual.toLocaleDateString('es-ES', opciones);
+    var xfecha = document.getElementById('fechanow');
+    xfecha.innerHTML = "Reservas para hoy " + fechaFormateada;
 
     function guardarId(id, idestado, estado) {
         localStorage.setItem('idReservacheckin', id);

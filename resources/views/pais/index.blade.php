@@ -125,8 +125,12 @@ $breadcrumbs = Breadcrumbs::generate('home'); // Cambia a tu breadcrumb deseado
     function guardar() {
         var nombre = document.getElementById('nombre').value;
         var siglas = document.getElementById('siglas').value;
+       
         var urlActual = window.location.href;
-        axios.post(urlActual, {
+        let url = urlActual.indexOf("/estadoreserva") + "/estadoreserva".length;
+        let resultadoURL = urlActual.substring(0, url);
+
+        axios.post(resultadoURL, {
                 siglas: siglas,
                 nombre: nombre
             })

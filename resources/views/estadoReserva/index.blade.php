@@ -16,7 +16,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Registrar un estado</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Registrar un estado para la reserva</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -24,7 +24,7 @@
             <form>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="nombre">Estado</label>
+                        <label for="estado">Estado</label>
                         <input type="text" class="form-control" id="estado" name="estado" placeholder="Ingrese el estado de la reserva" />
                     </div>
                 </div>
@@ -50,7 +50,7 @@
     </div>
 </div>
 @else
-<table class="table table-hover">
+<table class="table table-hover table-bordered table-striped">
     <thead>
         <tr>
             <th scope="col">Nombre</th>
@@ -88,6 +88,7 @@
         @endforeach
     </tbody>
 </table>
+{{ $estados->links() }}
 @endif
 
 @stop
@@ -102,7 +103,9 @@
     function guardar() {
         var estado = document.getElementById('estado').value;
         var urlActual = window.location.href;
-        axios.post(urlActual, {
+        let url = urlActual.indexOf("/estadoreserva") + "/estadoreserva".length;
+        let resultadoURL = urlActual.substring(0, url);
+        axios.post(resultadoURL, {
                 estado: estado,
             })
             .then(response => {
@@ -111,7 +114,7 @@
                     title: 'Registrado ',
                     icon: 'success',
                 }).then((result) => {
-                    window.location.href=window.location.href;
+                    window.location.href = urlActual;
                 });
             })
             .catch(error => {
@@ -142,10 +145,11 @@
     }
 
     function condirmarEliminar() {
-
         const id = localStorage.getItem('idEstadoReserva');
         var urlActual = window.location.href;
-        axios.delete('/estado/' + id)
+        let url = urlActual.indexOf("/estadoreserva") + "/estadoreserva".length;
+        let resultadoURL = urlActual.substring(0, url);
+        axios.delete(resultadoURL + '/' + id)
             .then(function(response) {
                 Swal.fire({
                     title: "Eliminado",

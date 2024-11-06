@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('estado_reservas', function (Blueprint $table) {
             $table->id();
             $table->string('estado',50)->nullable(false);
+            $table->string('color',8)->nullable(false);
         });
     }
 

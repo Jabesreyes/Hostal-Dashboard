@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cliente;
+use App\Models\Estado_reserva;
 use App\Models\Habitacion;
 use App\Models\Metodo_pago;
 use App\Models\Plataforma;
@@ -20,7 +21,8 @@ class ReservaController
         $plataformas=Plataforma::all();
         $habitacions=Habitacion::all();
         $metodos=Metodo_pago::all();
-        return view('reserva.index',compact(['clientes','habitacions','plataformas','metodos']));
+        $estados_reserva=Estado_reserva::all();
+        return view('reserva.index',compact(['clientes','habitacions','plataformas','metodos','estados_reserva']));
     }
     public function verificarReserva(Request $request)
     {
