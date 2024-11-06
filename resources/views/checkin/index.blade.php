@@ -9,13 +9,14 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Registrar Ingreso</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Estado de la reserva</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <form>
                 <div class="modal-body">
+                    <h5 id="estadoReserva" class="alert alert-success" role="alert"></h5>
                     @foreach($estadoreservas as $estado)
                     <div class="form-group">
                         <label>
@@ -37,7 +38,7 @@
 <div class="card-deck">
     @foreach($reservas as $reserva)
     <div class=" card info-box bg-primary">
-        <a onclick="guardarId('{{$reserva->id}}')" href="#" data-toggle="modal" data-target="#exampleModal">
+        <a onclick="guardarId('{{$reserva->id}}','{{$reserva->estado_reservas->id}}','{{$reserva->estado_reservas->estado}}')" href="#" data-toggle="modal" data-target="#exampleModal">
             <span class="info-box-icon"><i class="fa fa-bed"></i></span>
             <div class="info-box-content">
                 <span class="info-box-text">Cliente: {{$reserva->clientes->nombre}}</span>
@@ -63,25 +64,34 @@
     function mostrarModal() {
         var modal = document.getElementById('exampleModal');
         modal.setAttribute('data-toggle', "modal");
+
     }
 
-    function guardarId(id) {
+    function guardarId(id, idestado, estado) {
         localStorage.setItem('idReservacheckin', id);
+        var x = document.getElementById('estadoReserva');
+        x.innerHTML = 'Estado actual: ' + estado;
+        const radios = document.getElementsByName("opcion");
+        radios.forEach(radio => {
+            if (radio.value === idestado) {
+                radio.checked = true; // Selecciona el radiobutton con valor '2'
+            }
+        });
     }
 
     function guardar() {
         const opcion = document.querySelector('input[name="opcion"]:checked').value;
         var id = localStorage.getItem('idReservacheckin')
         var urlActual = window.location.href;
-        let url = urlActual.replace("/checkin", '/reserva/'+id);
+        let url = urlActual.replace("/checkin", '/reserva/' + id);
         axios.patch(url, {
                 estado_reservas_id: opcion,
-                id:id
+                id: id
             })
             .then(response => {
                 console.log(response)
                 Swal.fire({
-                    title: 'Registrado ',
+                    title: 'Reserva actualizada',
                     icon: 'success',
                 }).then((result) => {
                     window.location.href = window.location.href;

@@ -70,7 +70,7 @@ $breadcrumbs = Breadcrumbs::generate('home'); // Cambia a tu breadcrumb deseado
     </div>
 </div>
 @else
-<table class="table table-hover">
+<table class="table table-hover table-bordered table-striped">
     <thead>
         <tr>
             <th scope="col">Nombre</th>

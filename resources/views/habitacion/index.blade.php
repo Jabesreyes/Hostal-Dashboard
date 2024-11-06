@@ -77,7 +77,8 @@
     </div>
 </div>
 @else
-<table class="table table-hover">
+<br/><br/>
+<table class="table table-hover table-bordered table-striped">
     <thead>
         <tr>
             <th scope="col">Nombre</th>

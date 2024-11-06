@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Estado Habitacion')
+@section('title', 'Reservas')
 <link href='https://unpkg.com/fullcalendar@5.11.3/main.css' rel='stylesheet' />
 @section('content_header')
 @stop
@@ -83,6 +83,15 @@
                     <div class="col-6">
                         <label for="capacidad">Capacidad</label>
                         <input type="text" value="0" readonly class="form-control" id="capacidad" name="capacidad" placeholder="Capacidad">
+                    </div>
+                    <div class="col-6">
+                        <label for="estado_reservas_id">Estado de la reserva</label>
+                        <select data-live-search="true" class="selectpicker form-control" name="estado_reservas_id" id="estado_reservas_id">
+                            <option value="null">Seleccione</option>
+                            @foreach ($estados_reserva as $estadoR)
+                            <option value="{{ $estadoR->id}}">{{ $estadoR->estado}}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -256,6 +265,7 @@
         var metodo_pagos_id = document.getElementById('metodo').value;
         var total_pagado = document.getElementById('total').value;
         var precio_dia = document.getElementById('precio').value;
+        var estado_reservas_id=document.getElementById('estado_reservas_id').value;
 
         var urlActual = window.location.href;
         let url = urlActual.indexOf("/reserva") + "/reserva".length;
@@ -277,7 +287,7 @@
                         total_pagado: total_pagado,
                         fecha_reserva: obtenerFechaHoraFormateada(),
                         precio_dia: precio_dia,
-                        estado_reservas_id:4
+                        estado_reservas_id:estado_reservas_id,
                     })
                     .then(response => {
                         console.log(response)
