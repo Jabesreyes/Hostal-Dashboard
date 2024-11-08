@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Estado_reserva;
 use App\Models\Reserva;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class CheckInController
@@ -13,16 +14,18 @@ class CheckInController
      */
     public function index()
     {
-        $datas['estadoreservas']=Estado_reserva::all();
-        $data['reservas'] = Reserva::reservasDelMes();
-        return view('checkin.index', $data,$datas);
+        $estadoreservas = Estado_reserva::all();
+        return view('checkin.index', compact('estadoreservas'));
     }
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function filtrar(Request $request)
     {
-        //
+        $fechaInicio = Carbon::createFromFormat('d/m/Y', $request->fechaInicio)->format('Y-m-d');
+        $fechaFin = Carbon::createFromFormat('d/m/Y', $request->fechaFin)->format('Y-m-d');
+        $reservas = Reserva::reservasDeSemana($fechaInicio,$fechaFin);
+        return response()->json(['reservas' => $reservas]);
     }
 
     /**

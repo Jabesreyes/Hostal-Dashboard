@@ -4,6 +4,7 @@ use App\Http\Controllers\CheckInController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\EstadoController;
 use App\Http\Controllers\EstadoReservaController;
+use App\Http\Controllers\FinanzaController;
 use App\Http\Controllers\HabitacionController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MetodoPagoController;
@@ -64,7 +65,9 @@ Route::post('/reserva/validar',[ReservaController::class,'verificarReserva']);
 Route::post('/reserva',[ReservaController::class,'store']);
 Route::patch('/reserva/{id}',[ReservaController::class,'update']);
 
+//rutas para el check in
 Route::get('/checkin',[CheckInController::class,'index'])->name('checkin');
+Route::post('/checkin',[CheckInController::class,'filtrar'])->name('checkin');
 
 //url para estados de las reservas
 Route::get('/estadoreserva',[EstadoReservaController::class,'index']);
@@ -72,3 +75,7 @@ Route::post('/estadoreserva',[EstadoReservaController::class,'store']);
 Route::delete('/estadoreserva/{id}', [EstadoReservaController::class ,'destroy']);
 Route::patch('/estadoreserva/{id}/edit', [EstadoReservaController::class ,'update']);
 Route::get('/estadoreserva/{id}/edit', [EstadoReservaController::class ,'edit']);
+
+//url para administrar las finanzas
+Route::get('/finanza',[FinanzaController::class,'index']);
+Route::post('/finanza',[FinanzaController::class,'filtrar']);

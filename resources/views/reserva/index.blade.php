@@ -314,33 +314,6 @@
             }
 
         });
-        /* axios.post(resultadoURL, {
-                 clientes_id: clientes_id,
-                 habitacions_id: habitacions_id,
-                 fecha_ingreso: fecha_ingreso,
-                 fecha_retiro: fecha_retiro,
-                 plataformas_id: plataformas_id,
-                 metodo_pagos_id: metodo_pagos_id,
-                 total_pagado: total_pagado,
-                 fecha_reserva: obtenerFechaHoraFormateada(),
-                 precio_dia: precio_dia
-             })
-             .then(response => {
-                 console.log(response)
-                 Swal.fire({
-                     title: 'Registrado ',
-                     icon: 'success',
-                 }).then((result) => {
-                     window.location.href = window.location.href;
-                 });
-             })
-             .catch(error => {
-                 console.log(error)
-                 Swal.fire({
-                     title: 'Ha ocurrido un error ' + error,
-                     icon: 'error',
-                 })
-             }); */
     };
 
     function search() {

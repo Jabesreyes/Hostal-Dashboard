@@ -45,15 +45,15 @@ class HabitacionController
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update($id)
     {
         try {
             $dato = request()->except(['_token', '_method']);
-            // Actualiza los datos de la categoría con los datos de la solicitud
+            // Actualiza los datos de la habitacion con los datos de la solicitud
             Habitacion::where('id', '=', $id)->update($dato);
         } catch (\Exception $e) {
             // Otros tipos de excepciones
-            return response()->json(['error' => 'Error interno del servidor' . $e], 500);
+            return response()->json(['error' => 'Error interno del servidor' .$e], 500);
         }
     }
 

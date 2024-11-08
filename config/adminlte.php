@@ -329,7 +329,7 @@ return [
         ],
         [
             'text' => 'Finanzas',
-            'url' => 'admin/settings',
+            'url' => 'finanza',
             'icon' => 'fas fa-fw fa-calculator text-success',
         ],
         ['header' => 'account_settings'],

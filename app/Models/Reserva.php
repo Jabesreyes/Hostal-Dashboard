@@ -40,19 +40,13 @@ class Reserva extends Model
     //reservas del mes
     public static function reservasDelMes()
     {
-        $fechaActual = new DateTime();
         $fechaHoy = Carbon::today('America/El_Salvador')->toDateString();
-        $fechaIngreso = $fechaActual->modify('first day of this month')->format('Y-m-d');
-        $fechaRetiro = $fechaActual->modify('last day of this month')->format('Y-m-d');
-        return Reserva::with(['clientes', 'estado_reservas'])
-            ->where('estado_reservas_id', '!=', 1)
-            ->where(function ($query) use ($fechaIngreso, $fechaRetiro) {
-                $query->whereBetween('fecha_ingreso', [$fechaIngreso, $fechaRetiro])
-                    ->orWhereBetween('fecha_retiro', [$fechaIngreso, $fechaRetiro])
-                    ->orWhere(function ($query) use ($fechaIngreso, $fechaRetiro) {
-                        $query->where('fecha_ingreso', '<=', $fechaIngreso)
-                            ->where('fecha_retiro', '>=', $fechaRetiro);
-                    });
-            })->whereDate('fecha_ingreso', $fechaHoy)->get();
+        return Reserva::with(['clientes', 'estado_reservas','habitacions'])
+            ->where('estado_reservas_id', '!=', 1)->whereDate('fecha_ingreso', $fechaHoy)->get();
+    }
+    //reservas del mes
+    public static function reservasDeSemana($fechaInicio, $fechaFin)
+    {
+        return Reserva::with(['clientes', 'estado_reservas','habitacions'])->where('estado_reservas_id', '!=', 1)->whereBetween('fecha_ingreso', [$fechaInicio, $fechaFin])->get();
     }
 }
