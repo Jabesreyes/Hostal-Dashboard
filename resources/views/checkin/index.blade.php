@@ -105,7 +105,7 @@
         var urlActual = window.location.href;
         axios.post(urlActual, {
                 fechaInicio: fechaInicio,
-                fechaFin: fechaFin
+                fechaFin: fechaFin,
             }).then(response => {
                 console.log()
                 document.getElementById('contenedor-tarjetas').innerHTML = '';

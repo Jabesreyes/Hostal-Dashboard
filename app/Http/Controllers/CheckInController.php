@@ -24,7 +24,7 @@ class CheckInController
     {
         $fechaInicio = Carbon::createFromFormat('d/m/Y', $request->fechaInicio)->format('Y-m-d');
         $fechaFin = Carbon::createFromFormat('d/m/Y', $request->fechaFin)->format('Y-m-d');
-        $reservas = Reserva::reservasDeSemana($fechaInicio,$fechaFin);
+        $reservas = Reserva::reservasDeSemana($fechaInicio, $fechaFin);
         return response()->json(['reservas' => $reservas]);
     }
 

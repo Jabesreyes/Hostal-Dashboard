@@ -41,12 +41,17 @@ class Reserva extends Model
     public static function reservasDelMes()
     {
         $fechaHoy = Carbon::today('America/El_Salvador')->toDateString();
-        return Reserva::with(['clientes', 'estado_reservas','habitacions'])
+        return Reserva::with(['clientes', 'estado_reservas', 'habitacions'])
             ->where('estado_reservas_id', '!=', 1)->whereDate('fecha_ingreso', $fechaHoy)->get();
     }
     //reservas del mes
     public static function reservasDeSemana($fechaInicio, $fechaFin)
     {
-        return Reserva::with(['clientes', 'estado_reservas','habitacions'])->where('estado_reservas_id', '!=', 1)->whereBetween('fecha_ingreso', [$fechaInicio, $fechaFin])->get();
+        $fechaInicio = Carbon::parse($fechaInicio)->startOfDay(); // Comienza a las 00:00:00
+        $fechaFin = Carbon::parse($fechaFin)->endOfDay(); // Termina a las 23:59:59
+        return Reserva::with(['clientes', 'estado_reservas', 'habitacions'])
+            ->where('estado_reservas_id', '!=', 1)
+            ->whereBetween('fecha_ingreso', [$fechaInicio, $fechaFin])
+            ->get();
     }
 }
