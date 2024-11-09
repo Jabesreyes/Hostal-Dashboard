@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CheckInController;
+use App\Http\Controllers\CheckOutController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\EstadoController;
 use App\Http\Controllers\EstadoReservaController;
@@ -79,3 +80,7 @@ Route::get('/estadoreserva/{id}/edit', [EstadoReservaController::class ,'edit'])
 //url para administrar las finanzas
 Route::get('/finanza',[FinanzaController::class,'index']);
 Route::post('/finanza',[FinanzaController::class,'filtrar']);
+
+//url para administrar los checkout
+Route::get('/checkout',[CheckOutController::class,'index']);
+Route::post('/checkout',[CheckOutController::class,'filtrar']);

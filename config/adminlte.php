@@ -323,6 +323,11 @@ return [
             'icon' => 'fas fa-fw fa-sign-out-alt',
         ],
         [
+            'text' => 'Check Out',
+            'url' => 'checkout',
+            'icon' => 'fas fa-fw fa-money-check',
+        ],
+        [
             'text' => 'Clientes',
             'url' => 'cliente',
             'icon' => 'fas fa-fw fa-users',

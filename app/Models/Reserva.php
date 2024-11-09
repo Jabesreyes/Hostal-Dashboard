@@ -51,6 +51,17 @@ class Reserva extends Model
         $fechaFin = Carbon::parse($fechaFin)->endOfDay(); // Termina a las 23:59:59
         return Reserva::with(['clientes', 'estado_reservas', 'habitacions'])
             ->where('estado_reservas_id', '!=', 1)
+            ->where('estado_reservas_id', '!=', 2)
+            ->whereBetween('fecha_ingreso', [$fechaInicio, $fechaFin])
+            ->get();
+    }
+    public static function reservasDeSemanaOut($fechaInicio, $fechaFin)
+    {
+        $fechaInicio = Carbon::parse($fechaInicio)->startOfDay(); // Comienza a las 00:00:00
+        $fechaFin = Carbon::parse($fechaFin)->endOfDay(); // Termina a las 23:59:59
+        return Reserva::with(['clientes', 'estado_reservas', 'habitacions'])
+            ->where('estado_reservas_id', '=', 1)
+            ->where('estado_reservas_id', '!=', 3)
             ->whereBetween('fecha_ingreso', [$fechaInicio, $fechaFin])
             ->get();
     }
