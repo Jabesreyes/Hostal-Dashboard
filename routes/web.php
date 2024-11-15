@@ -24,7 +24,6 @@ Route::get('/',[HomeController::class,'index'])->name('home');
 Route::get('/pais',[PaisController::class,'index'])->name('pais');
 Route::post('/pais',[PaisController::class,'store']);
 Route::delete('/pais/{id}', [PaisController::class ,'destroy']);
-Route::get('/pais/buscar', [PaisController::class,'buscar'])->name('pais.buscar');
 Route::patch('/pais/{id}/edit', [PaisController::class ,'update']);
 Route::get('pais/{id}/edit', [PaisController::class ,'edit'])->name(('pais.edit'));
 
@@ -58,7 +57,6 @@ Route::post('/cliente',[ClienteController::class,'store']);
 Route::delete('/cliente/{id}', [ClienteController::class ,'destroy']);
 Route::patch('/cliente/{id}/edit', [ClienteController::class ,'update']);
 Route::get('cliente/{id}/edit', [ClienteController::class ,'edit'])->name(('cliente.edit'));
-Route::get('/cliente/buscar', [ClienteController::class,'buscar'])->name('cliente.buscar');
 
 Route::get('/reserva',[ReservaController::class,'index'])->name('reserva');
 Route::get('/reserva/calendario',[ReservaController::class,'obtenerReservas'])->name('reserva');
@@ -80,6 +78,7 @@ Route::get('/estadoreserva/{id}/edit', [EstadoReservaController::class ,'edit'])
 //url para administrar las finanzas
 Route::get('/finanza',[FinanzaController::class,'index']);
 Route::post('/finanza',[FinanzaController::class,'filtrar']);
+Route::post('/finanzas',[FinanzaController::class,'store']);
 
 //url para administrar los checkout
 Route::get('/checkout',[CheckOutController::class,'index']);

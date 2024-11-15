@@ -27,6 +27,7 @@ class Reserva extends Model
     public static function existeReserva($habitacionId, $fechaIngreso, $fechaRetiro)
     {
         return Reserva::where('habitacions_id', $habitacionId)
+            ->where('congelar', '=', true)
             ->where(function ($query) use ($fechaIngreso, $fechaRetiro) {
                 $query->whereBetween('fecha_ingreso', [$fechaIngreso, $fechaRetiro])
                     ->orWhereBetween('fecha_retiro', [$fechaIngreso, $fechaRetiro])
@@ -50,8 +51,8 @@ class Reserva extends Model
         $fechaInicio = Carbon::parse($fechaInicio)->startOfDay(); // Comienza a las 00:00:00
         $fechaFin = Carbon::parse($fechaFin)->endOfDay(); // Termina a las 23:59:59
         return Reserva::with(['clientes', 'estado_reservas', 'habitacions'])
-            ->where('estado_reservas_id', '!=', 1)
             ->where('estado_reservas_id', '!=', 2)
+            ->where('estado_reservas_id', '!=', 3)
             ->whereBetween('fecha_ingreso', [$fechaInicio, $fechaFin])
             ->get();
     }
@@ -60,8 +61,8 @@ class Reserva extends Model
         $fechaInicio = Carbon::parse($fechaInicio)->startOfDay(); // Comienza a las 00:00:00
         $fechaFin = Carbon::parse($fechaFin)->endOfDay(); // Termina a las 23:59:59
         return Reserva::with(['clientes', 'estado_reservas', 'habitacions'])
-            ->where('estado_reservas_id', '=', 1)
-            ->where('estado_reservas_id', '!=', 3)
+            ->where('estado_reservas_id', '=', 2)
+            ->where('estado_reservas_id', '!=', 1)
             ->whereBetween('fecha_ingreso', [$fechaInicio, $fechaFin])
             ->get();
     }

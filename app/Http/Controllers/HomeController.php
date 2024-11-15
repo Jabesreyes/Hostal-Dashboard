@@ -16,8 +16,11 @@ class HomeController
         $habitacionesOcupadas = DB::table('habitacions')
         ->where('estados_id',2)
         ->count();
+        $habitacionesMantenimiento = DB::table('habitacions')
+        ->where('estados_id',3)
+        ->count();
         $habitaciones=Habitacion::count();
-        return view('/home',compact('habitaciones','habitacionesLibres','habitacionesOcupadas'));
+        return view('/home',compact('habitaciones','habitacionesLibres','habitacionesOcupadas','habitacionesMantenimiento'));
     }
 
     /**

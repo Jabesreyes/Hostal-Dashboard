@@ -22,6 +22,7 @@ class FinanzaController
             ->select('finanzas.*', 'reservas.*', 'clientes.*', 'plataformas.*')
             ->whereBetween('fecha_retiro', [$primerDia, $ultimoDia])
             ->sum('reservas.total_pagado');
+
         $primerDiaMes = Carbon::now()->startOfMonth();
         $ultimoDiaMes = Carbon::now()->endOfMonth();
         $totalPrecio = Finanza::join('reservas', 'finanzas.reservas_id', '=', 'reservas.id')
@@ -45,5 +46,10 @@ class FinanzaController
         $fechaFin = Carbon::createFromFormat('d/m/Y', $request->fechaFin)->format('Y-m-d');
         $datos = Finanza::filtrarPlataformaFecha($fechaInicio, $fechaFin, $request->input('plataformaId'));
         return response()->json(['finanzas' => $datos]);
+    }
+    public function store(Request $request)
+    {
+        $datos = request()->except(['_token', '_method']);
+        Finanza::insert($datos);
     }
 }

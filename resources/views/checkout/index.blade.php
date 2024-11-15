@@ -109,15 +109,13 @@
             }).then(response => {
                 console.log()
                 document.getElementById('contenedor-tarjetas').innerHTML = '';
-                if (response.data.reservas!=0) {
+                if (response.data.reservas != 0) {
                     response.data.reservas.forEach(reserva => {
                         crearTarjetaReserva(reserva);
                     });
-                }
-                else
-                {
+                } else {
                     const h2 = document.createElement('h4');
-                    h2.innerHTML='No se han encontrado salidas para las fechas: '+fechaInicio+' y '+fechaFin;
+                    h2.innerHTML = 'No se han encontrado salidas para las fechas: ' + fechaInicio + ' y ' + fechaFin;
                     document.getElementById('contenedor-tarjetas').appendChild(h2);
                 }
             })
@@ -231,24 +229,29 @@
         var id = localStorage.getItem('idReservacheckin');
         var habitacion = document.getElementById('habitacion').value;
         var urlActual = window.location.href;
-        let url = urlActual.replace("/checkin", '/reserva/' + id);
+        let url = urlActual.replace("/checkout", '/reserva/' + id);
         axios.patch(url, {
                 estado_reservas_id: opcion,
+                completa: true,
                 id: id
             })
             .then(response => {
                 var urlhabitacion = window.location.href;
-                let urlhabitacion2 = urlhabitacion.replace("/checkin", '/habitacion/' + habitacion + '/edit');
-                console.log(urlhabitacion2 + ' url habitacion');
+                let urlhabitacion2 = urlhabitacion.replace("/checkout", '/habitacion/' + habitacion + '/edit');
                 axios.patch(urlhabitacion2, {
-                    estados_id: 2,
+                    estados_id: 3,
                     id: habitacion,
+                }).then(response=> {
+                    let urlfinanza = urlActual.replace("/checkout", '/finanzas');
+                    axios.post(urlfinanza, {
+                        reservas_id: id,
+                    })
                 })
                 Swal.fire({
                     title: 'Reserva actualizada',
                     icon: 'success',
                 }).then((result) => {
-                    window.location.href = window.location.href;
+                    window.location.href = urlActual;
                 });
             })
             .catch(error => {

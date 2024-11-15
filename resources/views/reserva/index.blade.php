@@ -24,7 +24,7 @@
                 <div class="modal-body row">
                     <div class="col-12">
                         <label for="nombre">Seleccione Cliente</label>
-                        <select data-live-search="true" class="selectpicker form-control" name="cliente" id="cliente">
+                        <select required data-live-search="true" class="selectpicker form-control" name="cliente" id="cliente">
                             <option>---Seleccione---</option>
                             @foreach ($clientes as $cliente)
                             <option value="{{ $cliente->id}}">{{ $cliente->nombre}}</option>
@@ -33,7 +33,7 @@
                     </div>
                     <div class="col-6">
                         <label for="habitacion">Seleccione habitacion</label>
-                        <select onchange="mostrarPrecio();" data-live-search="true" class="selectpicker form-control" name="habitacion" id="habitacion">
+                        <select required onchange="mostrarPrecio();" data-live-search="true" class="selectpicker form-control" name="habitacion" id="habitacion">
                             <option value="null">Seleccione</option>
                             @foreach ($habitacions as $habitacion)
                             <option value="{{ $habitacion->id}}">Habitacion N° {{ $habitacion->numero}} {{ $habitacion->nombre}}</option>
@@ -42,29 +42,35 @@
                     </div>
                     <div class="col-6">
                         <label for="plataforma">Plataforma de reserva</label>
-                        <select data-live-search="true" class="selectpicker form-control" name="plataforma" id="plataforma">
+                        <select required data-live-search="true" class="selectpicker form-control" name="plataforma" id="plataforma">
                             <option value="null">Seleccione</option>
                             @foreach ($plataformas as $plataforma)
                             <option value="{{ $plataforma->id}}">{{ $plataforma->plataforma}}</option>
                             @endforeach
                         </select>
+
                     </div>
                     <div class="col-6">
                         <label for="inicio">Desde</label>
-                        <input type="text" onchange="calcularDias();" class="form-control" id="inicio" name="inicio" placeholder="Fecha de inicio">
+                        <input required type="text" onchange="calcularDias();" class="form-control" id="inicio" name="inicio" placeholder="Fecha de inicio">
                     </div>
                     <div class="col-6">
                         <label for="hasta">Hasta</label>
-                        <input type="text" onchange="calcularDias();" class="form-control" id="fin" name="fin" placeholder="Seleccione el dia final">
+                        <input required type="text" onchange="calcularDias();" class="form-control" id="fin" name="fin" placeholder="Seleccione el dia final">
                     </div>
-
+                    <div class="col-12">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="congelar">
+                            <label class="custom-control-label" for="congelar">Congelar fechas</label>
+                        </div>
+                    </div>
                     <div class="col-6">
                         <label for="inicio">Precio 24 Horas</label>
                         <input type="text" value="0" readonly disabled class="form-control" id="precio" name="precio" placeholder="precio 24 H">
                     </div>
                     <div class="col-6">
                         <label for="metodo">Metodo de pago</label>
-                        <select data-live-search="true" class="selectpicker form-control" name="metodo" id="metodo">
+                        <select required data-live-search="true" class="selectpicker form-control" name="metodo" id="metodo">
                             <option value="null">Seleccione</option>
                             @foreach ($metodos as $metodo)
                             <option value="{{ $metodo->id}}">{{ $metodo->metodo}}</option>
@@ -86,7 +92,7 @@
                     </div>
                     <div class="col-6">
                         <label for="estado_reservas_id">Estado de la reserva</label>
-                        <select data-live-search="true" class="selectpicker form-control" name="estado_reservas_id" id="estado_reservas_id">
+                        <select required data-live-search="true" class="selectpicker form-control" name="estado_reservas_id" id="estado_reservas_id">
                             <option value="null">Seleccione</option>
                             @foreach ($estados_reserva as $estadoR)
                             <option value="{{ $estadoR->id}}">{{ $estadoR->estado}}</option>
@@ -146,7 +152,11 @@
         axios.get(url + '/' + x)
             .then(response => {
                 // Muestra los datos de la habitación en el resultado
-                document.getElementById('precio').value = response.data.precio;
+                if (response.data.precio_promocion > 0.0) {
+                    document.getElementById('precio').value = response.data.precio_promocion;
+                } else {
+                    document.getElementById('precio').value = response.data.precio;
+                }
                 document.getElementById('capacidad').value = response.data.capacidad + ' Personas';
                 calcularDias();
             })
@@ -265,7 +275,8 @@
         var metodo_pagos_id = document.getElementById('metodo').value;
         var total_pagado = document.getElementById('total').value;
         var precio_dia = document.getElementById('precio').value;
-        var estado_reservas_id=document.getElementById('estado_reservas_id').value;
+        var estado_reservas_id = document.getElementById('estado_reservas_id').value;
+        var congelar = document.getElementById('congelar');
 
         var urlActual = window.location.href;
         let url = urlActual.indexOf("/reserva") + "/reserva".length;
@@ -287,7 +298,9 @@
                         total_pagado: total_pagado,
                         fecha_reserva: obtenerFechaHoraFormateada(),
                         precio_dia: precio_dia,
-                        estado_reservas_id:estado_reservas_id,
+                        estado_reservas_id: estado_reservas_id,
+                        congelar: congelar.checked,
+                        completa: false
                     })
                     .then(response => {
                         console.log(response)

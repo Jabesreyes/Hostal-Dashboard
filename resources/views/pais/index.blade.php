@@ -17,10 +17,10 @@ $breadcrumbs = Breadcrumbs::generate('home'); // Cambia a tu breadcrumb deseado
 <form class="form-fixed float-right" action="/pais" method="get">
     <button type="submit" class="btn btn-primary mb-2"><i class="fa fa-sync"></i></button>
 </form>
-<form class="form-inline float-right" method="get" action="{{ route('pais.buscar') }}">
+<form class="form-inline float-right" method="get"  action="{{ url('/pais') }}" >
     <div class="form-group mb-2">
         <label for="buscar" class="sr-only">Buscar</label>
-        <input type="text" class="form-control" id="buscar" name="buscar" placeholder="Pais a buscar">
+        <input type="text" class="form-control" id="buscar" value="{{ request('buscar') }}" name="buscar" placeholder="Pais a buscar">
     </div>
     <button type="submit" class="btn btn-success mb-2"><i class="fa fa-search"></i></button>
 </form>
@@ -110,7 +110,7 @@ $breadcrumbs = Breadcrumbs::generate('home'); // Cambia a tu breadcrumb deseado
         @endforeach
     </tbody>
 </table>
-{{ $paises->links() }}
+{{ $paises->appends(['buscar' => request('buscar')])->links()}}
 @endif
 
 @stop
@@ -118,18 +118,16 @@ $breadcrumbs = Breadcrumbs::generate('home'); // Cambia a tu breadcrumb deseado
 @section('css')
 <link rel="stylesheet" href="/vendor/adminlte/dist/css/admin_custom.css">
 @stop
-
 @section('js')
 @vite('resources/js/app.js')
 <script>
     function guardar() {
         var nombre = document.getElementById('nombre').value;
         var siglas = document.getElementById('siglas').value;
-       
-        var urlActual = window.location.href;
-        let url = urlActual.indexOf("/estadoreserva") + "/estadoreserva".length;
-        let resultadoURL = urlActual.substring(0, url);
 
+        var urlActual = window.location.href;
+        let url = urlActual.indexOf("/pais") + "/pais".length;
+        let resultadoURL = urlActual.substring(0, url);
         axios.post(resultadoURL, {
                 siglas: siglas,
                 nombre: nombre
@@ -142,7 +140,7 @@ $breadcrumbs = Breadcrumbs::generate('home'); // Cambia a tu breadcrumb deseado
                     confirmButtonText: 'Aceptar'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        window.location.href=urlActual;
+                        window.location.href = resultadoURL;
                     }
                 })
             })
@@ -174,10 +172,9 @@ $breadcrumbs = Breadcrumbs::generate('home'); // Cambia a tu breadcrumb deseado
     }
 
     function condirmarEliminar() {
-
         const id = localStorage.getItem('idPais');
         var urlActual = window.location.href;
-        axios.delete('/pais/' + id)
+        axios.delete(urlActual + '/' + id)
             .then(function(response) {
                 Swal.fire({
                     title: "Eliminado",
@@ -188,12 +185,7 @@ $breadcrumbs = Breadcrumbs::generate('home'); // Cambia a tu breadcrumb deseado
                 }).then((result) => {
                     var d = document.querySelector('#conf');
                     d.setAttribute('data-dismiss', 'modal');
-                    axios.get(urlActual).then(function(response) {
-                            window.location.href = urlActual;
-                        })
-                        .catch(function(error) {
-                            console.log('error get' + error);
-                        });
+                    window.location.href = urlActual;
                 });
             })
             .catch(function(error) {

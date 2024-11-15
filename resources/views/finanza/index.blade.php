@@ -156,7 +156,6 @@
             var valor = localStorage.setItem('opcion', opcion);
         }
         var seleccionPlataforma = document.getElementById('plataforma').value;
-        var opcion = opcion;
         if (opcion == 0) {
             opcion = localStorage.getItem('opcion');
         }
@@ -167,7 +166,6 @@
             fechaInicio = trimestresRango[seleccionTrimestre - 1].inicio;
             fechaFin = trimestresRango[seleccionTrimestre - 1].fin;
         }
-
         var urlActual = window.location.href;
         var total = 0;
         const select = document.getElementById("plataforma");

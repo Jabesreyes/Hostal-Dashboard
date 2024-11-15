@@ -107,17 +107,14 @@
                 fechaInicio: fechaInicio,
                 fechaFin: fechaFin,
             }).then(response => {
-                console.log()
                 document.getElementById('contenedor-tarjetas').innerHTML = '';
-                if (response.data.reservas!=0) {
+                if (response.data.reservas != 0) {
                     response.data.reservas.forEach(reserva => {
                         crearTarjetaReserva(reserva);
                     });
-                }
-                else
-                {
+                } else {
                     const h2 = document.createElement('h4');
-                    h2.innerHTML='No se han encontrado reservas para las fechas: '+fechaInicio+' y '+fechaFin;
+                    h2.innerHTML = 'No se han encontrado reservas para las fechas: ' + fechaInicio + ' y ' + fechaFin;
                     document.getElementById('contenedor-tarjetas').appendChild(h2);
                 }
             })

@@ -23,6 +23,8 @@ return new class extends Migration
             $table->float('total_pagado',8,2);
             $table->float('precio_dia',8,2);
             $table->foreignId('estado_reservas_id')->constrained();
+            $table->boolean('congelar')->nullable(false);
+            $table->boolean('completa')->nullable(false);
 
          /*   id_cliente int not null,
 id_habitacion int not null,

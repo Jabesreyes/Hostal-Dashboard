@@ -103,10 +103,9 @@
     function guardar() {
         var estado = document.getElementById('estado').value;
         var urlActual = window.location.href;
-        let url = urlActual.indexOf("/estadoreserva") + "/estadoreserva".length;
-        let resultadoURL = urlActual.substring(0, url);
-        axios.post(resultadoURL, {
+        axios.post(urlActual, {
                 estado: estado,
+                color: 'red'
             })
             .then(response => {
                 console.log(response)

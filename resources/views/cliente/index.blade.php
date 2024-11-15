@@ -162,7 +162,6 @@
         let url = urlActual.indexOf("/cliente") + "/cliente".length;
         let resultadoURL = urlActual.substring(0, url);
 
-
         axios.post(resultadoURL, {
                 nombre: nombre,
                 telefono: telefono,
@@ -176,7 +175,7 @@
                     title: 'Registrado ',
                     icon: 'success',
                 }).then((result) => {
-                    window.location.href = window.location.href;
+                    window.location.href = resultadoURL;
                 });
             })
             .catch(error => {
@@ -212,7 +211,7 @@
         var urlActual = window.location.href;
         let url = urlActual.indexOf("/cliente") + "/cliente".length;
         let resultadoURL = urlActual.substring(0, url);
-        axios.delete(resultadoURL+'/' + id)
+        axios.delete(resultadoURL + '/' + id)
             .then(function(response) {
                 Swal.fire({
                     title: "Eliminado",

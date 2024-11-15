@@ -11,33 +11,27 @@ class PaisController
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $data['paises']=Pais::paginate(5);
-        return view('pais.index',$data);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function buscar(Request $request)
+    public function index(Request $request)
     {
         $texto = $request->input('buscar');
-        $resultados['paises'] = Pais::buscar($texto);
-        return view('pais.index', $resultados);
+        if (!$texto) {
+            $paises = Pais::paginate(5);
+            return view('pais.index', compact('paises'));
+        } else {
+            $paises = Pais::buscar($texto);
+            $paises->appends(['buscar' => $texto]);
+            return view('pais.index', compact('paises'));
+        }
     }
-     
-    public function create()
-    {
-        
-    }
+
+    public function create() {}
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        $datos=request()->except(['_token','_method']);
+        $datos = request()->except(['_token', '_method']);
         Pais::insert($datos);
     }
 
@@ -61,15 +55,15 @@ class PaisController
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
         try {
-            $dato = request()->except(['_token','_method']);
+            $dato = request()->except(['_token', '_method']);
             // Actualiza los datos de la categoría con los datos de la solicitud
-            Pais::where('id','=',$id)->update($dato);
+            Pais::where('id', '=', $id)->update($dato);
         } catch (\Exception $e) {
             // Otros tipos de excepciones
-            return response()->json(['error' => 'Error interno del servidor'.$e], 500);
+            return response()->json(['error' => 'Error interno del servidor' . $e], 500);
         }
     }
 
