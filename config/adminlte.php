@@ -328,6 +328,11 @@ return [
             'icon' => 'fas fa-fw fa-money-check',
         ],
         [
+            'text' => 'Mantenimiento',
+            'url' => 'habitacion/mantenimiento',
+            'icon' => 'fas fa-fw fa-bed',
+        ],
+        [
             'text' => 'Clientes',
             'url' => 'cliente',
             'icon' => 'fas fa-fw fa-users',
@@ -340,12 +345,12 @@ return [
         ['header' => 'account_settings'],
         [
             'text' => 'profile',
-            'url' => 'admin/settings',
+            'url' => 'perfil',
             'icon' => 'fas fa-fw fa-user',
         ],
         [
             'text' => 'change_password',
-            'url' => 'admin/settings',
+            'url' => '/user/password',
             'icon' => 'fas fa-fw fa-lock',
         ],
         ['header' => 'CONFIGURACIONES'],

@@ -14,12 +14,17 @@ class HabitacionController
         $data['habitaciones'] = Habitacion::with('estados')->get();
         return view('habitacion.index', $data, $estados);
     }
+    public function mantenimiento()
+    {
+        $data['habitaciones'] = Habitacion::with('estados')->where('estados_id', '=', 3)->get();
+        return view('habitacion.mantenimiento', $data);
+    }
     public function store(Request $request)
     {
         $datos = request()->except(['_token', '_method']);
         Habitacion::insert($datos);
     }
-    
+
     public function buscarPorId($id)
     {
         $habitacion = Habitacion::find($id);
@@ -53,7 +58,7 @@ class HabitacionController
             Habitacion::where('id', '=', $id)->update($dato);
         } catch (\Exception $e) {
             // Otros tipos de excepciones
-            return response()->json(['error' => 'Error interno del servidor' .$e], 500);
+            return response()->json(['error' => 'Error interno del servidor' . $e], 500);
         }
     }
 

@@ -42,8 +42,38 @@ $breadcrumbs = Breadcrumbs::generate('home'); // Cambia a tu breadcrumb deseado
     </div>
 </div>
 <div class="row">
-    <div class="col-4">
+    <div class="col-3">
+        <h5>Plataformas con mas reservas del mes</h5>
         <canvas id="myChart"></canvas>
+    </div>
+    <div class="col-3">
+        <h5>Ingresos mensual por plataforma</h5>
+        <canvas id="myChartBar"></canvas>
+    </div>
+    <div class="col-6">
+        <h5>Ultimas 5 reservas</h5>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Cliente</th>
+                    <th scope="col">Fecha de reserva</th>
+                    <th scope="col">Fecha de Ingreso</th>
+                    <th scope="col">Fecha de Retiro</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($ultimasReservas as $reservas)
+                <tr>
+                    <th scope="row">{{ $loop->iteration }}</th>
+                    <td>{{$reservas->clientes->nombre}}</td>
+                    <td>{{$reservas->fecha_reserva}}</td>
+                    <td>{{$reservas->fecha_ingreso}}</td>
+                    <td>{{$reservas->fecha_retiro}}</td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
     </div>
 </div>
 
@@ -55,29 +85,68 @@ $breadcrumbs = Breadcrumbs::generate('home'); // Cambia a tu breadcrumb deseado
 
 @section('js')
 <script>
-    const ctx = document.getElementById('myChart');
+    function generarGrafico() {
+        const url = window.location.href;
+        const urlN = url + 'graficoCircular'
+        fetch(urlN)
+            .then(response => response.json())
+            .then(data => {
+                const labels = data.map(item => item.plataforma || 'Sin Plataforma'); // Nombres o IDs de plataformas
+                const valores = data.map(item => item.total_reservas); // Totales por plataforma
 
-    new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-            labels: ['Red', 'Blue', 'Green'],
-            datasets: [{
-                label: 'My First Dataset',
-                data: [300, 50, 100],
-                backgroundColor: [
-                    'rgb(255, 99, 132)',
-                    'rgb(54, 162, 235)',
-                    'rgb(255, 205, 86)'
-                ],
-                hoverOffset: 4
-            }]
-        },
-        options: {
-            title: {
-                display: true,
-                text: 'Custom Chart Title'
-            }
-        }
-    });
+                const ctx = document.getElementById('myChart');
+                new Chart(ctx, {
+                    type: 'doughnut', // Tipo de gráfico (puede ser 'line', 'pie', etc.)
+                    data: {
+                        labels: labels, // Ejes X
+                        datasets: [{
+                            label: 'Reservas',
+                            data: valores, // Valores en el eje Y
+                            borderWidth: 2 // Ancho del borde
+                        }]
+                    },
+
+                });
+            })
+            .catch(error => {
+                console.error('Error al obtener datos:', error);
+            });
+        const urlBar = url + 'graficoBarra'
+        fetch(urlBar)
+            .then(response => response.json())
+            .then(data => {
+                const labels = data.map(item => item.plataforma || 'Sin Plataforma'); // Nombres o IDs de plataformas
+                const valores = data.map(item => item.totalPrecio); // Totales por plataforma
+
+                const ctx2 = document.getElementById('myChartBar');
+                new Chart(ctx2, {
+                    type: 'bar', // Tipo de gráfico (puede ser 'line', 'pie', etc.)
+                    data: {
+                        labels: labels, // Ejes X
+                        datasets: [{
+                            label: 'Ingreso $',
+                            data: valores, // Valores en el eje Y
+                            borderWidth: 2, // Ancho del borde
+                            backgroundColor: function(context) {
+                                const index = context.dataIndex;
+                                return randomColor(); // Asigna un color aleatorio a cada barra
+                            },
+                        }]
+                    },
+
+                });
+            })
+            .catch(error => {
+                console.error('Error al obtener datos:', error);
+            });
+    }
+
+    function randomColor() {
+        const r = Math.floor(Math.random() * 256);
+        const g = Math.floor(Math.random() * 256);
+        const b = Math.floor(Math.random() * 256);
+        return `rgb(${r}, ${g}, ${b})`;
+    }
+    window.onload = generarGrafico
 </script>
 @stop

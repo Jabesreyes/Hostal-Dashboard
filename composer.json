@@ -8,6 +8,7 @@
         "php": "^8.2",
         "davejamesmiller/laravel-breadcrumbs": "^5.3",
         "jeroennoten/laravel-adminlte": "^3.13",
+        "laravel/fortify": "^1.24",
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9"
     },
