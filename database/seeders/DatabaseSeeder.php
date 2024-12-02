@@ -16,6 +16,8 @@ class DatabaseSeeder extends Seeder
         $this->call(PaisSeeder::class);
         $this->call(PlataformaSeeder::class);
         $this->call(EstadoSeeder::class);
+        $this->call(HabitacionSeeder::class);
+
 
 
 
