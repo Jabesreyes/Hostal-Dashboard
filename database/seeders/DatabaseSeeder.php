@@ -15,11 +15,14 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(PaisSeeder::class);
         $this->call(PlataformaSeeder::class);
+        $this->call(EstadoReservaSeeder::class);
         $this->call(EstadoSeeder::class);
         $this->call(HabitacionSeeder::class);
         $this->call(MetodoPagoSeeder::class);
         $this->call(UserSeeder::class);
         $this->call(ClienteSeeder::class);
+        $this->call(ReservaSeeder::class);
+
 
 
         // User::factory(10)->create();
