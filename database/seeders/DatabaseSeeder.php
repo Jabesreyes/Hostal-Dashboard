@@ -19,10 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call(HabitacionSeeder::class);
         $this->call(MetodoPagoSeeder::class);
         $this->call(UserSeeder::class);
-
-
-
-
+        $this->call(ClienteSeeder::class);
 
 
         // User::factory(10)->create();

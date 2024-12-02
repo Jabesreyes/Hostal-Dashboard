@@ -25,16 +25,6 @@ return new class extends Migration
             $table->foreignId('estado_reservas_id')->constrained();
             $table->boolean('congelar')->nullable(false);
             $table->boolean('completa')->nullable(false);
-
-         /*   id_cliente int not null,
-id_habitacion int not null,
-fecha_ingreso date not null,
-fecha_retiro date not null,
-id_plataforma_reserva int not null,
-id_metodo_pago int not null,
-fecha_reserva date not null,
-total_pagado DECIMAL(10, 2),
-id_estado_reserva*/
         });
     }
 
