@@ -22,3 +22,48 @@ Clona el repositorio desde GitHub:
 ```bash
 git clone https://github.com/Jabesreyes/Hostal-Dashboard.git
 cd Hostal-Dashboard
+```
+### 2. Configurar el entorno de Laravel
+
+##### 1.Instalar dependencias de PHP
+``` bash
+composer install
+
+```
+#### 2. Configurar el archivo .env
+``` bash
+    cp .env.example .env
+```
+#### 3. Generar la clave de la aplicación
+``` bash
+php artisan key:generate
+```
+#### 4. Ejecutar las migraciones
+``` bash
+php artisan migrate
+```
+#### 5. Ejecutar los Seeders
+``` bash
+php artisan db:seed
+```
+
+### 3. Configurar el entorno de Node.js
+
+##### 1.Instalar dependencias de Node.js
+``` bash
+npm install
+
+```
+#### 2. Compilar los assets de front-end
+``` bash
+npm run dev    
+npm run build  
+```
+
+### 4. Iniciar el servidor de Laravel
+
+##### 1. Usar el servidor
+``` bash
+php artisan serve
+
+```
