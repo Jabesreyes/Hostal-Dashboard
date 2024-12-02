@@ -20,5 +20,6 @@ class EstadoSeeder extends Seeder
         ];
 
         DB::table('estados')->insert($estados);
+        //coment
     }
 }
