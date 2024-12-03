@@ -13,10 +13,9 @@ class EstadoSeeder extends Seeder
     public function run(): void
     {
         $estados = [
-            ['estado' => 'Disponible'],
-            ['estado' => 'Ocupada'],
-            ['estado' => 'Limpieza'],
-            ['estado' => 'Mantenimiento'],
+            ['estado' => 'disponible'],
+            ['estado' => 'ocupada'],
+            ['estado' => 'mantenimiento o limpieza'],
         ];
 
         DB::table('estados')->insert($estados);

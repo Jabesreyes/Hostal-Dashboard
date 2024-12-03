@@ -18,7 +18,7 @@ class ReservaSeeder extends Seeder
         $habitaciones = [1, 2, 3]; // IDs de habitaciones de ejemplo
         $plataformas = [1, 2, 3]; // IDs de plataformas de ejemplo
         $metodos_pago = [1, 2]; // IDs de métodos de pago de ejemplo
-        $estado_reservas = [1, 2]; // IDs de estados de reservas de ejemplo
+        $estado_reservas = [1, 2, 3]; // IDs de estados de reservas de ejemplo
 
         for ($i = 1; $i <= 20; $i++) {
             $fecha_ingreso = Carbon::create(2024, rand(1, 12), rand(1, 28));

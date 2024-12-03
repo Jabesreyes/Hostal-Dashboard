@@ -13,10 +13,9 @@ class EstadoReservaSeeder extends Seeder
     public function run(): void
     {
         $estados = [
-            ['estado' => 'completa', 'color' => '#FFEBCD'], // Verde
-            ['estado' => 'Reserva confirmada', 'color' => '#4CAF50'], // Verde
-            ['estado' => 'Reserva pendiente', 'color' => '#FFEB3B'],  // Amarillo
-            ['estado' => 'Reserva cancelada', 'color' => '#F44336'],  // Rojo
+            ['estado' => 'reservado', 'color' => '#FFEBCD'], // Verde
+            ['estado' => 'ingresado', 'color' => '#4CAF50'], // Verde
+            ['estado' => 'retirado', 'color' => '#F44336'],  // Amarillo
         ];
 
         DB::table('estado_reservas')->insert($estados);
