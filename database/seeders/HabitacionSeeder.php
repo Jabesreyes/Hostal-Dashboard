@@ -36,7 +36,7 @@ class HabitacionSeeder extends Seeder
             [
                 'numero' => 103,
                 'nombre' => 'Suite Familiar',
-                'capacidad' => 4,
+                'capacidad' => 3,
                 'descripcion' => 'Habitación ideal para familias, incluye sala y cocina pequeña.',
                 'estados_id' => 2, // Ocupada
                 'precio' => 100.00,
@@ -58,7 +58,7 @@ class HabitacionSeeder extends Seeder
                 'nombre' => 'Habitación Económica',
                 'capacidad' => 1,
                 'descripcion' => 'Opción económica para estadías cortas.',
-                'estados_id' => 4, // Mantenimiento
+                'estados_id' => 3, // Mantenimiento
                 'precio' => 20.00,
                 'precio_promocion' => 18.00,
                 'color' => '#999999'
